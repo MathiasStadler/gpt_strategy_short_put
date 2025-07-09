@@ -234,3 +234,87 @@ Bitte beantworte diese neuen Fragen, um die Planung weiter zu präzisieren.
 
 ---
 
+_**User**_
+
+Ich habe alle Fragen im File prompt_2.md beantworete. Bitte neue Fragen diesem Dokument hinzufügen.
+
+---
+
+_**Assistant**_
+
+````markdown
+...existing code...
+
+Bitte beantworte diese neuen Fragen, um die Planung weiter zu präzisieren.
+
+---
+
+### 10. Weitere offene Punkte & Präzisierungen
+
+- **Fehlerbehandlung & Monitoring:**  
+  - Wie sollen Fehler und Ausfälle im laufenden Betrieb behandelt werden? (z.B. automatische Benachrichtigung, Neustart, Fehlerprotokoll)
+  - Soll ein externes Monitoring-Tool (z.B. Prometheus, Grafana) integriert werden?
+
+- **API-Limits & Rate-Limiting:**  
+  - Gibt es Vorgaben oder Wünsche zum Umgang mit API-Limits der IBKR-Schnittstelle?
+  - Soll das Tool automatisch pausieren oder retries durchführen, wenn Limits erreicht werden?
+
+- **Performance & Skalierung:**  
+  - Gibt es Anforderungen an die Geschwindigkeit der Orderausführung oder des Backtestings?
+  - Soll das Tool für spätere parallele Ausführung (z.B. mehrere Strategien gleichzeitig) vorbereitet werden?
+
+- **Dokumentation & Support:**  
+  - Welche Art von Dokumentation wünschst du dir? (z.B. README, Inline-Kommentare, User Guide)
+  - Soll es eine Möglichkeit geben, Support-Anfragen oder Feedback direkt aus dem Tool zu senden?
+
+- **Teststrategie:**  
+  - Welche Arten von Tests sind dir wichtig? (z.B. Unit-Tests, Integrationstests, End-to-End-Tests)
+  - Soll das Tool automatisch getestet werden (z.B. via CI/CD Pipeline)?
+
+Bitte beantworte diese neuen Fragen, damit das Konzept weiter konkretisiert werden kann.
+````
+
+---
+
+_**User**_
+
+Ich habe alle Fragen im File prompt_2.md beantworete. Bitte neue Fragen diesem Dokument hinzufügen.
+
+---
+
+_**Assistant**_
+
+````markdown
+...existing code...
+
+Bitte beantworte diese neuen Fragen, damit das Konzept weiter konkretisiert werden
+
+---
+
+### 11. Weitere technische und organisatorische Details
+
+- **Datenaktualisierung:**  
+  - Wie oft sollen die Marktdaten im Live-Betrieb aktualisiert werden (z.B. minütlich, sekündlich, bei jedem neuen Tick)?
+  - Sollen historische Daten lokal zwischengespeichert werden, um API-Last zu reduzieren?
+
+- **Konfigurierbarkeit:**  
+  - Welche Einstellungen sollen zur Laufzeit ohne Neustart änderbar sein (z.B. Prämiengrenzen, Aktienliste, Positionsgröße)?
+  - Wünschst du dir eine Konfigurationsdatei (z.B. YAML, TOML, JSON) oder ausschließlich Umgebungsvariablen?
+
+- **Benutzerverwaltung (für spätere Erweiterungen):**  
+  - Soll das Tool später mehrere Benutzer mit eigenen Einstellungen unterstützen?
+  - Gibt es Anforderungen an Rollen oder Rechteverwaltung?
+
+- **Wartung & Updates:**  
+  - Wie sollen Updates des Tools und der Abhängigkeiten gehandhabt werden (z.B. automatisiert, manuell)?
+  - Soll das Tool sich selbst auf neue Versionen prüfen können?
+
+- **Archivierung & Datenhaltung:**  
+  - Wie lange sollen Backtest- und Tradingdaten aufbewahrt werden?
+  - Sollen alte Daten automatisch archiviert oder gelöscht werden?
+
+Bitte beantworte diese neuen Fragen, um die Planung weiter zu verfeinern.
+````
+
+---
+
