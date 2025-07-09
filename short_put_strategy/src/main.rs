@@ -49,3 +49,6 @@ fn main() {
 
     // TODO: Hier weitere Logik für Datenabruf, Strategie, Orderausführung etc.
 }
+
+// --- New code: Add dependency for ibkr-rust ---
+

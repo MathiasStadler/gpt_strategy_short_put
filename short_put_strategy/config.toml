@@ -1,0 +1,11 @@
+[strategy]
+min_premium = 1.0
+max_loss = 2.0
+position_size = 1000
+
+[api]
+ibkr_host = "localhost"
+ibkr_port = 4002
+
+[logging]
+level = "info"
