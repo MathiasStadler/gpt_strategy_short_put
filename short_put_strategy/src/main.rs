@@ -1,11 +1,24 @@
 // This file is the entry point of the application. It initializes the program, calls the necessary functions to analyze stock data, and implements the short put strategy.
 
 mod analysis;
+mod config;
+mod credentials;
 mod data;
 mod strategy;
 mod utils;
 
 fn main() {
+    env_logger::init();
+    println!("Short Put Strategy Tool gestartet.");
+
+    // Konfiguration laden
+    let config = config::load_config("config.toml").expect("Konfiguration konnte nicht geladen werden.");
+    println!("Konfiguration geladen: {:?}", config);
+
+    // TWS-Credentials laden
+    let creds = credentials::load_credentials("credentials.toml").expect("TWS-Credentials konnten nicht geladen werden.");
+    println!("TWS-Credentials geladen: {:?}", creds);
+
     // Fetch stock data
     let stock_data = data::fetch_stock_data();
 
@@ -33,4 +46,6 @@ fn main() {
         }
         None => println!("No suitable short put option found for {}", ticker),
     }
+
+    // TODO: Hier weitere Logik für Datenabruf, Strategie, Orderausführung etc.
 }

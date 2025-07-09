@@ -707,3 +707,148 @@ CMD ["./target/release/short_put_strategy"]
 
 ---
 
+_**User**_
+
+bitte erstelle die rust programm files und compiliere sie zum test
+
+---
+
+_**Assistant**_
+
+````rust
+mod config;
+
+fn main() {
+    env_logger::init();
+    println!("Short Put Strategy Tool gestartet.");
+
+    // Konfiguration laden
+    let config = config::load_config("config.toml").expect("Konfiguration konnte nicht geladen werden.");
+    println!("Konfiguration geladen: {:?}", config);
+
+    // TODO: Hier weitere Logik für Datenabruf, Strategie, Orderausführung etc. implementieren
+}
+````
+
+````rust
+use serde::Deserialize;
+use std::fs;
+
+#[derive(Debug, Deserialize)]
+pub struct StrategyConfig {
+    pub min_premium: f64,
+    pub max_loss: f64,
+    pub position_size: u32,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ApiConfig {
+    pub ibkr_host: String,
+    pub ibkr_port: u16,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct LoggingConfig {
+    pub level: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Config {
+    pub strategy: StrategyConfig,
+    pub api: ApiConfig,
+    pub logging: LoggingConfig,
+}
+
+pub fn load_config(path: &str) -> Result<Config, Box<dyn std::error::Error>> {
+    let content = fs::read_to_string(path)?;
+    let config: Config = toml::from_str(&content)?;
+    Ok(config)
+}
+````
+
+**Kompilieren und Testen:**
+
+Führe im Projektverzeichnis folgenden Befehl aus:
+```bash
+cd short_put_strategy
+cargo build --release
+cargo run
+```
+
+Damit wird das Grundgerüst kompiliert und getestet.
+
+---
+
+_**User**_
+
+Pls add and use a file for credential for TWS client
+
+---
+
+_**Assistant**_
+
+````rust
+use std::fs;
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+pub struct Credentials {
+    pub username: String,
+    pub password: String,
+    pub host: String,
+    pub port: u16,
+}
+
+pub fn load_credentials(path: &str) -> Result<Credentials, Box<dyn std::error::Error>> {
+    content = fs::read_to_string(path)?;
+    let creds: Credentials = toml::from_str(&content)?;
+    Ok(creds)
+}
+````
+
+````toml
+username = "your_tws_username"
+password = "your_tws_password"
+host = "localhost"
+port = 4002
+````
+
+````rust
+mod config;
+mod credentials;
+
+fn main() {
+    env_logger::init();
+    println!("Short Put Strategy Tool gestartet.");
+
+    // Konfiguration laden
+    let config = config::load_config("config.toml").expect("Konfiguration konnte nicht geladen werden.");
+    println!("Konfiguration geladen: {:?}", config);
+
+    // TWS-Credentials laden
+    let creds = credentials::load_credentials("credentials.toml").expect("TWS-Credentials konnten nicht geladen werden.");
+    println!("TWS-Credentials geladen: {:?}", creds);
+
+    // TODO: Hier weitere Logik für Datenabruf, Strategie, Orderausführung etc. implementieren
+}
+````
+
+---
+
+_**User**_
+
+create a demo credential file
+
+---
+
+_**Assistant**_
+
+````toml
+username = "demo_user"
+password = "demo_password"
+host = "localhost"
+port = 4002
+````
+
+---
+
