@@ -1,2 +1,3 @@
 /target
 short_put_strategy/target/**/*
+short_put_strategy/credentials.toml
