@@ -1064,3 +1064,715 @@ esac
 
 ---
 
+_**User**_
+
+Bitte erstelle mir einen kompletten prompt mit allen erfragten Anforderungen  und speichere sie local in ein neue Datei
+
+---
+
+_**Assistant**_
+
+````markdown
+# Prompt für die Entwicklung eines Rust-Tools zur Short Put Optionsstrategie
+
+## Ziel
+Entwickle ein Open-Source-Tool in Rust (Apache 2.0), das die Short Put Strategie auf Aktien aus dem NASDAQ 100 automatisiert umsetzt, inklusive Backtesting, Paper Trading, Risiko-Management, Logging, Reporting und Docker-Deployment.
+
+---
+
+### 1. Datenquelle & API
+
+- Nutze [`ibkr_rust`](https://github.com/wvietor/ibkr_rust) als API für Marktdaten, Orderausführung und Margin-Berechnung.
+- Historische Daten sollen lokal zwischengespeichert werden, um API-Last zu reduzieren.
+- Marktdatenaktualisierung im Live-Betrieb: Intervall als Variable (im Paper Trading minütlich).
+
+---
+
+### 2. Strategie-Parameter
+
+- Aktienuniversum: Nur NASDAQ 100.
+- Mindest-Optionsprämie als Variable am Programmanfang.
+- Alle weiteren Strategieparameter (z.B. Prämiengrenzen, Aktienliste, Positionsgröße) sollen zur Laufzeit ohne Neustart änderbar sein (Konfiguration via TOML, crate: [toml](https://crates.io/crates/toml)).
+
+---
+
+### 3. Orderausführung
+
+- Automatische Trailing-Order.
+- Schließung bei 50% Gewinn (bezogen auf Prämie) oder 200% Verlust.
+- Backtesting für die letzten 24 Monate, inkl. Slippage, Gebühren, Margin-Berechnung.
+- Zuerst nur Paper Trading (Simulation), keine echten Orders.
+- Orderausführung für spätere parallele Strategien vorbereiten.
+
+---
+
+### 4. Risiko-Management
+
+- Maximaler Verlust: 200% der Prämie.
+- Margin-Anforderungen automatisch aus IBKR-Daten.
+- Positionsgröße: Maximal fester Betrag, als Variable am Anfang.
+- Warnungen bei Schwellenwerten per E-Mail (maxmeyer3372@gmail.com) und Log.
+- Fehlerzustände: Automatische Benachrichtigung, Neustart, Fehlerprotokoll per Mail.
+
+---
+
+### 5. Benutzeroberfläche & Reporting
+
+- CLI-Anwendung.
+- Gewinn/Verlust-Kurven als HTML-Webseite, Berichte als CSV und HTML.
+- Alle Datumsangaben im Format Tag/Monat/Jahr.
+
+---
+
+### 6. Persistenz & Logging
+
+- Speicherung von Trades, Signalen und Backtests in Dateien (CSV).
+- Logging mit [env_logger](https://crates.io/crates/env_logger).
+- Maximal 5GB Speicherplatz für Backtest- und Tradingdaten, automatische Komprimierung und Löschung außerhalb des Docker-Containers.
+
+---
+
+### 7. Deployment & Betrieb
+
+- Das Tool läuft in einem Docker-Container (Debian-basiert), max. 2 Cores, 8GB RAM.
+- Container soll automatisch neu starten, falls das Programm abstürzt.
+- Automatisierung: Tool läuft dauerhaft im Container, Container-Status wird überwacht.
+- Keine automatische Backups.
+
+---
+
+### 8. Erweiterbarkeit
+
+- Spätere Erweiterung um Put Spreads und weitere Strategien/Märkte möglich.
+- Tool für parallele Ausführung mehrerer Strategien vorbereiten.
+
+---
+
+### 9. Dokumentation & Tests
+
+- Inline-Kommentare für jede Funktion.
+- 100% Testabdeckung, Line-Profiling, umfassende Funktionstests (Order öffnen, kontrollieren, schließen).
+- Automatische Tests via CI/CD (Jenkins in Docker-Container, Build erzeugt Docker-Image, aber kein automatisches Veröffentlichen).
+
+---
+
+### 10. Schnittstellen & Export
+
+- Export von Daten/Signalen an Drittsysteme im CSV-Format.
+
+---
+
+### 11. Rechtliches & Compliance
+
+- Alle Bestandteile (Docker, Libraries, Sprache) müssen Open Source sein.
+- Automatisch generierter Disclaimer/Risikohinweis in Englisch und Deutsch.
+
+---
+
+### 12. Weitere technische und organisatorische Details
+
+- Keine Benutzerverwaltung, keine Rollen/Rechte.
+- Updates: Tool prüft selbst auf neue Versionen, Updates nur nach Zustimmung.
+- Keine Backups, keine Security-Audits, keine speziellen Entwicklungs-Workflows.
+- Projekt ist Open Source (Apache 2.0).
+- Tool-Sprache und Kommentare: Plain English.
+- Keine Community-Plattform oder Contributor-Richtlinie zu Beginn.
+- Keine explizit ausgeschlossenen Bibliotheken, aber alle Abhängigkeiten sollen regelmäßig auf Sicherheitslücken geprüft werden.
+- Keine Anforderungen an Energieeffizienz, aber Optimierungspotenziale (Speicher, CPU) sollen regelmäßig geprüft werden.
+- Keine Roadmap/Wartungsplan, Verantwortlichkeit nach Absprache.
+
+---
+
+**Bitte beachte:**  
+Verwende stets die letzten stabilen Versionen aller Tools, Libraries und Abhängigkeiten.
+
+---
+
+**Ende des Prompts**
+````
+
+---
+
+_**User**_
+
+Bitte uebersetze die letze ausgabe ins englische
+
+---
+
+_**Assistant**_
+
+````markdown
+# Prompt for the development of a Rust tool for the short put options strategy
+
+## Goal
+Develop an open-source tool in Rust (Apache 2.0) that automates the short put strategy on stocks from the NASDAQ 100, including backtesting, paper trading, risk management, logging, reporting, and Docker deployment.
+
+---
+
+### 1. Data Source & API
+
+- Use [`ibkr_rust`](https://github.com/wvietor/ibkr_rust) as the API for market data, order execution, and margin calculation.
+- Historical data should be cached locally to reduce API load.
+- Market data updates in live operation: interval as a variable (every minute in paper trading).
+
+---
+
+### 2. Strategy Parameters
+
+- Stock universe: NASDAQ 100 only.
+- Minimum option premium as a variable at program start.
+- All other strategy parameters (e.g., premium limits, stock list, position size) should be changeable at runtime without restart (configuration via TOML, crate: [toml](https://crates.io/crates/toml)).
+
+---
+
+### 3. Order Execution
+
+- Automatic trailing order.
+- Close at 50% profit (relative to premium) or 200% loss.
+- Backtesting for the last 24 months, including slippage, fees, margin calculation.
+- Initially paper trading only (simulation), no real orders.
+- Prepare order execution for future parallel strategies.
+
+---
+
+### 4. Risk Management
+
+- Maximum loss: 200% of the premium.
+- Margin requirements automatically from IBKR data.
+- Position size: maximum fixed amount, as a variable at the start.
+- Alerts at thresholds via email (maxmeyer3372@gmail.com) and log.
+- Error states: automatic notification, restart, error log via email.
+
+---
+
+### 5. User Interface & Reporting
+
+- CLI application.
+- Profit/loss curves as HTML web page, reports as CSV and HTML.
+- All date entries in day/month/year format.
+
+---
+
+### 6. Persistence & Logging
+
+- Store trades, signals, and backtests in files (CSV).
+- Logging with [env_logger](https://crates.io/crates/env_logger).
+- Maximum 5GB storage for backtest and trading data, automatic compression and deletion outside the Docker container.
+
+---
+
+### 7. Deployment & Operation
+
+- The tool runs in a Docker container (Debian-based), max. 2 cores, 8GB RAM.
+- Container should automatically restart if the program crashes.
+- Automation: tool runs continuously in the container, container status is monitored.
+- No automatic backups.
+
+---
+
+### 8. Extensibility
+
+- Later extension to put spreads and other strategies/markets possible.
+- Prepare tool for parallel execution of multiple strategies.
+
+---
+
+### 9. Documentation & Tests
+
+- Inline comments for every function.
+- 100% test coverage, line profiling, comprehensive function tests (open, monitor, close orders).
+- Automated tests via CI/CD (Jenkins in Docker container, build creates Docker image, but no automatic publishing).
+
+---
+
+### 10. Interfaces & Export
+
+- Export data/signals to third-party systems in CSV format.
+
+---
+
+### 11. Legal & Compliance
+
+- All components (Docker, libraries, language) must be open source.
+- Automatically generated disclaimer/risk notice in English and German.
+
+---
+
+### 12. Further Technical and Organizational Details
+
+- No user management, no roles/permissions.
+- Updates: tool checks for new versions itself, updates only after approval.
+- No backups, no security audits, no special development workflows.
+- Project is open source (Apache 2.0).
+- Tool language and comments: plain English.
+- No community platform or contributor guideline at the beginning.
+- No explicitly excluded libraries, but all dependencies should be regularly checked for security vulnerabilities.
+- No requirements for energy efficiency, but optimization potential (memory, CPU) should be checked regularly.
+- No roadmap/maintenance plan, responsibility by agreement.
+
+---
+
+**Note:**  
+Always use the latest stable versions of all tools, libraries, and dependencies.
+
+---
+
+**End of prompt**
+````
+
+---
+
+_**User**_
+
+Bitte speichere die letzte Ausgabe in einer neuen Datei
+
+---
+
+_**Assistant**_
+
+````markdown
+# Prompt for the development of a Rust tool for the short put options strategy
+
+## Goal
+Develop an open-source tool in Rust (Apache 2.0) that automates the short put strategy on stocks from the NASDAQ 100, including backtesting, paper trading, risk management, logging, reporting, and Docker deployment.
+
+---
+
+### 1. Data Source & API
+
+- Use [`ibkr_rust`](https://github.com/wvietor/ibkr_rust) as the API for market data, order execution, and margin calculation.
+- Historical data should be cached locally to reduce API load.
+- Market data updates in live operation: interval as a variable (every minute in paper trading).
+
+---
+
+### 2. Strategy Parameters
+
+- Stock universe: NASDAQ 100 only.
+- Minimum option premium as a variable at program start.
+- All other strategy parameters (e.g., premium limits, stock list, position size) should be changeable at runtime without restart (configuration via TOML, crate: [toml](https://crates.io/crates/toml)).
+
+---
+
+### 3. Order Execution
+
+- Automatic trailing order.
+- Close at 50% profit (relative to premium) or 200% loss.
+- Backtesting for the last 24 months, including slippage, fees, margin calculation.
+- Initially paper trading only (simulation), no real orders.
+- Prepare order execution for future parallel strategies.
+
+---
+
+### 4. Risk Management
+
+- Maximum loss: 200% of the premium.
+- Margin requirements automatically from IBKR data.
+- Position size: maximum fixed amount, as a variable at the start.
+- Alerts at thresholds via email (maxmeyer3372@gmail.com) and log.
+- Error states: automatic notification, restart, error log via email.
+
+---
+
+### 5. User Interface & Reporting
+
+- CLI application.
+- Profit/loss curves as HTML web page, reports as CSV and HTML.
+- All date entries in day/month/year format.
+
+---
+
+### 6. Persistence & Logging
+
+- Store trades, signals, and backtests in files (CSV).
+- Logging with [env_logger](https://crates.io/crates/env_logger).
+- Maximum 5GB storage for backtest and trading data, automatic compression and deletion outside the Docker container.
+
+---
+
+### 7. Deployment & Operation
+
+- The tool runs in a Docker container (Debian-based), max. 2 cores, 8GB RAM.
+- Container should automatically restart if the program crashes.
+- Automation: tool runs continuously in the container, container status is monitored.
+- No automatic backups.
+
+---
+
+### 8. Extensibility
+
+- Later extension to put spreads and other strategies/markets possible.
+- Prepare tool for parallel execution of multiple strategies.
+
+---
+
+### 9. Documentation & Tests
+
+- Inline comments for every function.
+- 100% test coverage, line profiling, comprehensive function tests (open, monitor, close orders).
+- Automated tests via CI/CD (Jenkins in Docker container, build creates Docker image, but no automatic publishing).
+
+---
+
+### 10. Interfaces & Export
+
+- Export data/signals to third-party systems in CSV format.
+
+---
+
+### 11. Legal & Compliance
+
+- All components (Docker, libraries, language) must be open source.
+- Automatically generated disclaimer/risk notice in English and German.
+
+---
+
+### 12. Further Technical and Organizational Details
+
+- No user management, no roles/permissions.
+- Updates: tool checks for new versions itself, updates only after approval.
+- No backups, no security audits, no special development workflows.
+- Project is open source (Apache 2.0).
+- Tool language and comments: plain English.
+- No community platform or contributor guideline at the beginning.
+- No explicitly excluded libraries, but all dependencies should be regularly checked for security vulnerabilities.
+- No requirements for energy efficiency, but optimization potential (memory, CPU) should be checked regularly.
+- No roadmap/maintenance plan, responsibility by agreement.
+
+---
+
+**Note:**  
+Always use the latest stable versions of all tools, libraries, and dependencies.
+
+---
+
+**End of prompt**
+````
+
+---
+
+_**User**_
+
+Pls add the  create all sources files , dockerfile . conantainer handling and the bash scripts for project initaklisierung
+
+---
+
+_**Assistant**_
+
+````markdown
+# Prompt for the development of a Rust tool for the short put options strategy (with project structure and scripts)
+
+## Project Structure & Scripts
+
+### 1. Source Files
+
+#### src/main.rs
+````rust
+mod config;
+mod credentials;
+mod utils;
+
+fn main() {
+    env_logger::init();
+    println!("Short Put Strategy Tool started.");
+
+    // Load configuration
+    let config = config::load_config("config.toml").expect("Could not load config.");
+    println!("Loaded config: {:?}", config);
+
+    // Load TWS credentials
+    let creds = credentials::load_credentials("credentials.toml").expect("Could not load credentials.");
+    println!("Loaded TWS credentials: {:?}", creds);
+
+    // TODO: Add logic for data retrieval, strategy, order execution, etc.
+}
+````
+
+#### src/config.rs
+````rust
+use serde::Deserialize;
+use std::fs;
+
+#[derive(Debug, Deserialize)]
+pub struct StrategyConfig {
+    pub min_premium: f64,
+    pub max_loss: f64,
+    pub position_size: u32,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ApiConfig {
+    pub ibkr_host: String,
+    pub ibkr_port: u16,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct LoggingConfig {
+    pub level: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Config {
+    pub strategy: StrategyConfig,
+    pub api: ApiConfig,
+    pub logging: LoggingConfig,
+}
+
+pub fn load_config(path: &str) -> Result<Config, Box<dyn std::error::Error>> {
+    let content = fs::read_to_string(path)?;
+    let config: Config = toml::from_str(&content)?;
+    Ok(config)
+}
+````
+
+#### src/credentials.rs
+````rust
+use std::fs;
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+pub struct Credentials {
+    pub username: String,
+    pub password: String,
+    pub host: String,
+    pub port: u16,
+}
+
+pub fn load_credentials(path: &str) -> Result<Credentials, Box<dyn std::error::Error>> {
+    let content = fs::read_to_string(path)?;
+    let creds: Credentials = toml::from_str(&content)?;
+    Ok(creds)
+}
+````
+
+#### src/utils.rs
+````rust
+// This file contains utility functions that are used across the project.
+
+pub fn calculate_profit(premium_received: f64, strike_price: f64, stock_price_at_expiration: f64) -> f64 {
+    if stock_price_at_expiration < strike_price {
+        return premium_received - (strike_price - stock_price_at_expiration);
+    }
+    premium_received
+}
+
+pub fn calculate_risk(strike_price: f64, stock_price_at_expiration: f64) -> f64 {
+    if stock_price_at_expiration < strike_price {
+        return strike_price - stock_price_at_expiration;
+    }
+    0.0
+}
+````
+
+---
+
+### 2. Example Config Files
+
+#### config.toml
+````toml
+[strategy]
+min_premium = 1.0
+max_loss = 2.0
+position_size = 1000
+
+[api]
+ibkr_host = "localhost"
+ibkr_port = 4002
+
+[logging]
+level = "info"
+````
+
+#### credentials.toml
+````toml
+username = "demo_user"
+password = "demo_password"
+host = "localhost"
+port = 4002
+````
+
+---
+
+### 3. Cargo.toml (dependencies section)
+````toml
+[dependencies]
+ibkr-rust = "0.7"           # Check for latest version
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.7"
+chrono = "0.4"
+reqwest = { version = "0.11", features = ["blocking", "json"] }
+scraper = "0.18"
+env_logger = "0.11"
+log = "0.4"
+csv = "1.3"
+````
+
+---
+
+### 4. Dockerfile
+
+````dockerfile
+# filepath: /home/trapapa/gpt_strategy_short_put/short_put_strategy/Dockerfile
+FROM rust:1.77-slim-buster
+
+RUN apt-get update && \
+    apt-get install -y pkg-config libssl-dev ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY . .
+
+RUN cargo build --release
+
+ENV RUST_LOG=info
+
+CMD ["./target/release/short_put_strategy"]
+````
+
+---
+
+### 5. Bash Scripts
+
+#### setup_project.sh
+````bash
+# filepath: /home/trapapa/gpt_strategy_short_put/setup_project.sh
+#!/bin/bash
+set -e
+
+PROJECT_NAME="short_put_strategy"
+echo "==> Initializing Rust project: $PROJECT_NAME"
+cargo new $PROJECT_NAME --bin
+cd $PROJECT_NAME
+
+echo "==> Adding dependencies"
+cat >> `Cargo.toml` <<EOL
+
+[dependencies]
+ibkr-rust = "0.7"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.7"
+chrono = "0.4"
+reqwest = { version = "0.11", features = ["blocking", "json"] }
+scraper = "0.18"
+env_logger = "0.11"
+log = "0.4"
+csv = "1.3"
+EOL
+
+echo "==> Creating Dockerfile"
+cat > Dockerfile <<EOL
+FROM rust:1.77-slim-buster
+
+WORKDIR /app
+COPY . .
+
+RUN apt-get update && apt-get install -y pkg-config libssl-dev && \\
+    cargo build --release
+
+CMD ["./target/release/$PROJECT_NAME"]
+EOL
+
+echo "==> Creating example config.toml"
+cat > config.toml <<EOL
+[strategy]
+min_premium = 1.0
+max_loss = 2.0
+position_size = 1000
+
+[api]
+ibkr_host = "localhost"
+ibkr_port = 4002
+
+[logging]
+level = "info"
+EOL
+
+echo "==> Creating example credentials.toml"
+cat > credentials.toml <<EOL
+username = "demo_user"
+password = "demo_password"
+host = "localhost"
+port = 4002
+EOL
+
+git init
+git add .
+git commit -m "Initial project setup for short put strategy"
+
+echo "==> Setup complete!"
+````
+
+#### docker_handling.sh
+````bash
+# filepath: `docker_handling.sh`
+#!/bin/bash
+
+CONTAINER_NAME="short_put_strategy"
+IMAGE_NAME="short_put_strategy:latest"
+
+function usage() {
+    echo "Usage: $0 {new|rebuild|update|start|pause|stop|force-stop}"
+    exit 1
+}
+
+case "$1" in
+    new)
+        echo "==> Building new Docker image..."
+        docker build -t $IMAGE_NAME ./short_put_strategy
+        ;;
+    rebuild)
+        echo "==> Rebuilding Docker image (no cache)..."
+        docker build --no-cache -t $IMAGE_NAME ./short_put_strategy
+        ;;
+    update)
+        echo "==> Updating Docker and dependencies on Debian..."
+        sudo apt-get update
+        sudo apt-get install -y docker.io
+        sudo systemctl restart docker
+        ;;
+    start)
+        echo "==> Starting container..."
+        docker run -d --name $CONTAINER_NAME --rm $IMAGE_NAME
+        ;;
+    pause)
+        echo "==> Pausing container..."
+        docker pause $CONTAINER_NAME
+        ;;
+    stop)
+        echo "==> Stopping container gracefully..."
+        docker stop $CONTAINER_NAME
+        ;;
+    force-stop)
+        echo "==> Force stopping container..."
+        docker kill $CONTAINER_NAME
+        ;;
+    *)
+        usage
+        ;;
+esac
+````
+
+---
+
+### 6. .gitignore (important entries)
+````ignore
+/target
+short_put_strategy/target
+`credentials.toml`
+````
+
+---
+
+**Note:**  
+Always use the latest stable versions of all tools, libraries, and dependencies.
+
+---
+
+**End of prompt**
+
+
+---
+
