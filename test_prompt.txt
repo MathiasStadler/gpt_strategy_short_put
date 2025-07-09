@@ -1,0 +1,11 @@
+# found here
+# https://www.all-ai.de/tutorials/tutorials-ki/die-f%C3%BCnf-besten-ki-prompts-2025
+
+Give me a 60-second overview of [topic]. Include: 1) core idea, 2) why people care, 3) 
+one controversy, and 4) a smart question to ask in conversation.
+
+Give me a 60-second overview of option strategy short put . Include: 1) find the best stocks, 2) best profit 
+3) minimum risk, and 4) a the smallest cash required.
+
+
+create a program in rust for all the steps , use open sources for information 
